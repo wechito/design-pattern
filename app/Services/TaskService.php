@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\response\TaskResponseDTO;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
 
@@ -13,15 +14,22 @@ class TaskService {
     }
 
     public function findAll() {
-        return $this->taskRepository->findAll();
+        $tasks = $this->taskRepository->findAll();
+
+        return $tasks->map(function (Task $task) {
+            return TaskResponseDTO::fromModel($task);
+        });
     }
 
     public function create(array $data) {
-        return $this->taskRepository->create($data);
+        $task = $this->taskRepository->create($data);
+
+        return TaskResponseDTO::fromModel($task);
     }
 
     public function update(Task $task, array $data) {
-        return $this->taskRepository->update($task, $data);
+        $this->taskRepository->update($task, $data);
+        return TaskResponseDTO::fromModel($task);
     }
 
     public function delete(Task $task) {
