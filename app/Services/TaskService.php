@@ -32,7 +32,7 @@ class TaskService {
         return TaskResponseDTO::fromModel($task);
     }
 
-    public function delete(Task $task) {
-        return $this->taskRepository->delete($task);
+    public function delete(Task $task): void {
+        $this->taskRepository->delete($task);
     }
 }

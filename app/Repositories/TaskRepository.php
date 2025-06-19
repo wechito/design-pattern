@@ -18,7 +18,7 @@ class TaskRepository {
         return $task->update($data);
     }
 
-    public function delete(Task $task) {
-        return $task->delete();
+    public function delete(Task $task): void {
+        $task->delete();
     }
 }
